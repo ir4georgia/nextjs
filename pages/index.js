@@ -65,8 +65,8 @@ export default function Home() {
       <Head>
         <title>MP and Next.js</title>
         <link rel="icon" href="/favicon.ico" />
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js" />
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js" />
+        <script type="text/javascript" async src="//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js"></script>
+        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js"></script>
       </Head>
 
       <main>
