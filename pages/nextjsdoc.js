@@ -1,96 +1,64 @@
-import React, { useState, useEffect } from 'react';
 import Head from 'next/head'
 
-
 export default function Home() {
-
-  // This gets called on every request
-  async function getServerSideProps() {
-
-    return { props: { "org": "TechPubOps" } }
-  }
-
-  useEffect(() => {
-    if (window) {
-      if (window.addEventListener) {
-        addEventListener('DOMContentLoaded', function (event) {
-          console.log("ADSTATS: DOM Content Loaded")
-        });
-        addEventListener('scroll', function (event) {
-          console.log("ADSTATS: We be scrollin")
-        });
-      }
-
-      if (window.addEventListener) {
-        addEventListener('AdFuelCreated', function (event) {
-          alert("AdFuel Created")
-        })
-      }
-    }
-
-    if (window.AdFuel) {
-      AdFuel.addEvent(document, 'AdFuelRequestComplete', function (event) {
-        console.log('ADSTATS: AdFuelRequestComplete fired at ' + Date.now() / 1000 + ' for ' + event.detail.slots.length + ' slots');
-        var requestedSlots = event.detail.slots;
-        var dispatchOptions = event.detail.options;
-      });
-    
-      AdFuel.addEvent(document, 'GPTRenderComplete', function (event) {
-        console.log('ADSTATS: GPTRenderComplete for ' + event.detail.divId + ' fired at ' + Date.now() / 1000);
-        var gptSlot = event.detail.asset;
-        var renderedSlotId = 'ad_' + event.detail.pos;
-        var isEmpty = event.detail.empty;
-        var adSize = event.detail.renderedSize;
-      });
-    }
-
-    if (window) {
-      console.log('ADSTATS: Loading User Consent Config at ' + Date.now() / 1000);
-      window.WM = window.WM || {};
-      window.WM.UserConsentConfig = {
-        cookieDomain: '.nba.com',
-        domId: '7992f959-c30b-4bc2-a2b7-50dbd02eb075-test',
-        src: '//otcc-demo.otprivacy.com/scripttemplates/otSDKStub.js',
-        countryCode: "US",
-      };
-    }
-    if (window.AdFuel) {
-      console.log('ADSTATS: Queuing the Registry at ' + Date.now() / 1000);
-      AdFuel.queueRegistry("https://i.cdn.turner.com/ads/qa/nba2/nba_endeavor.min.js")
-    }
-  }, [])
-
   return (
     <div className="container">
       <Head>
-        <title>MP and Next.js</title>
+        <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
-        <script src="https://i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js"></script>
-    <script src="//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js"></script>
-
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js" />
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js" />
+        <script type="text/javascript" async src="https://i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js" />
+        <script type="text/javascript" async src="https://i.cdn.turner.com/ads/qa/adfuel/adfuel-2.0.min.js" />
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">MP on Next.js! What????</a>
+          Welcome to <a href="https://nextjs.org">Next.js! Got it?</a>
         </h1>
-        <li>Let's inject AdFuel Core and AIS.js files in HEAD</li>
-        <li>Next add UserConsent config via useEffect (when component mounts)</li>
-        <li>Finally, queue the registry via useEffect (when component mounts)</li>
-        <p>Here is ad_bnr_atf_01</p>
-        <div className="slotWrapper">
-          <div id="ad_bnr_atf_01"></div>
+
+        <p className="description">
+          Get started by editing <code>pages/index.js</code>
+        </p>
+
+        <div className="grid">
+          <a href="https://nextjs.org/docs" className="card">
+            <h3>Documentation &rarr;</h3>
+            <p>Find in-depth information about Next.js features and API.</p>
+          </a>
+
+          <a href="https://nextjs.org/learn" className="card">
+            <h3>Learn &rarr;</h3>
+            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          </a>
+
+          <a
+            href="https://github.com/zeit/next.js/tree/master/examples"
+            className="card"
+          >
+            <h3>Examples &rarr;</h3>
+            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          </a>
+
+          <a
+            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            className="card"
+          >
+            <h3>Deploy &rarr;</h3>
+            <p>
+              Instantly deploy your Next.js site to a public URL with Vercel.
+            </p>
+          </a>
         </div>
-    
-        <p>This page using PROD Ad Fuel and QA AIS: </p>
-        <p><a href="//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js" target="_blank">//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js</a> </p>
-        <p><a href="//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js" target="_blank">//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js</a> </p>
       </main>
 
       <footer>
-        <p>Michael J. Pierce - Tech Pub Ops</p>
+        <a
+          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by{' '}
+          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
+        </a>
       </footer>
 
       <style jsx>{`
@@ -101,12 +69,6 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-        }
-
-        .slotWrapper {
-          width: 728px;
-          height: 90px;
-          border: thin solid red;
         }
 
         main {
