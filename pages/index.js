@@ -6,57 +6,16 @@ export default function Home() {
 
   // This gets called on every request
   async function getServerSideProps() {
-
     return { props: { "org": "TechPubOps" } }
   }
 
   useEffect(() => {
-    // if (window) {
-    //   // if (window.addEventListener) {
-    //   //   addEventListener('DOMContentLoaded', function (event) {
-    //   //     console.log("ADSTATS: DOM Content Loaded")
-    //   //   });
-    //   //   addEventListener('scroll', function (event) {
-    //   //     //console.log("ADSTATS: We be scrollin")
-    //   //   });
-    //   // }
-
-    //   // if (window.addEventListener) {
-    //   //   addEventListener('AdFuelCreated', function (event) {
-    //   //     alert("AdFuel Created")
-    //   //   })
-    //   // }
-    // }
-
-    // if (window.AdFuel) {
-    //   AdFuel.addEvent(document, 'AdFuelRequestComplete', function (event) {
-    //     console.log('ADSTATS: AdFuelRequestComplete fired at ' + Date.now() / 1000 + ' for ' + event.detail.slots.length + ' slots');
-    //     var requestedSlots = event.detail.slots;
-    //     var dispatchOptions = event.detail.options;
-    //   });
-    
-    //   AdFuel.addEvent(document, 'GPTRenderComplete', function (event) {
-    //     console.log('ADSTATS: GPTRenderComplete for ' + event.detail.divId + ' fired at ' + Date.now() / 1000);
-    //     var gptSlot = event.detail.asset;
-    //     var renderedSlotId = 'ad_' + event.detail.pos;
-    //     var isEmpty = event.detail.empty;
-    //     var adSize = event.detail.renderedSize;
-    //   });
-    // }
-
-    // if (window) {
-    //   // console.log('ADSTATS: Loading User Consent Config at ' + Date.now() / 1000);
-    //   // window.WM = window.WM || {};
-    //   // window.WM.UserConsentConfig = {
-    //   //   cookieDomain: '.nba.com',
-    //   //   domId: '7992f959-c30b-4bc2-a2b7-50dbd02eb075-test',
-    //   //   src: '//otcc-demo.otprivacy.com/scripttemplates/otSDKStub.js',
-    //   //   countryCode: "US",
-    //   // };
-    // }
     if (window.AdFuel) {
-      console.log('ADSTATS: Queuing the Registry at ' + Date.now() / 1000);
-      AdFuel.queueRegistry("https://i.cdn.turner.com/ads/qa/nba2/nba_endeavor.min.js")
+      console.log('ADSTATS: UseEffect: Queuing the Registry at ' + Date.now() / 1000);
+      AdFuel.addPageLevelTarget('status','nba_endeavor')
+      AdFuel.queueRegistry("https://i.cdn.turner.com/ads/nba3/nba_homepage.min.js")
+    } else {
+      console.log('ADSTATS: useEffect: No Window.AdFuel at ' + Date.now() / 1000);
     }
   }, [])
 
@@ -65,34 +24,55 @@ export default function Home() {
       <Head>
         <title>MP and Next.js</title>
         <link rel="icon" href="/favicon.ico" />
-
-        <script type="text/javascript" src="/userconsent.js"></script>
-        <script type="text/javascript" async src="/addListeners.js"></script>
-        <script type="text/javascript" src="/addAdFuelComponents.js"></script>
-        {/* <script type="text/javascript" async src="//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js"></script>
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js"></script> */}
+        <script type="text/javascript" async src="userconsentConfig2.js"></script>
+        <script type="text/javascript" async src="user-consent.js"></script>
+        <script type="text/javascript" async src="addListeners2.js"></script>
+        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.min.js"></script>
+        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js"></script>
       </Head>
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">MP on Next.js! What????</a>
+          Welcome to <a href="https://nextjs.org">MP on Next.js 9.4.4</a>
         </h1>
+        <li>Let's use Next.js HEAD function to load "user-consent.js" file</li>
+        <li>Let's use Next.js HEAD function to load "userconsentConfig.js" file</li>
         <li>Let's use Next.js HEAD function to load "addListeners.js" file</li>
-        <li>Let's use Next.js HEAD function to load "userconsent.js" file</li>
-        <li>Let's use Next.js HEAD function to load "addAdFuelComponents.js" file</li>
+        <li>Let's use Next.js HEAD function to load "nba3-ais.min.js" and "adfuel-2.1.39.js" files</li>
         <li>Finally, queue the registry via useEffect (when component mounts)</li>
         <p>Here is ad_bnr_atf_01</p>
         <div className="slotWrapper">
           <div id="ad_bnr_atf_01"></div>
         </div>
+        <p>Here is ad_bnr_atf_02</p>
+        <div className="slotWrapper">
+          <div id="ad_bnr_atf_02"></div>
+        </div>
         <p>Here is ad_bnr_btf_01</p>
         <div className="slotWrapper">
           <div id="ad_bnr_btf_01"></div>
         </div>
+        <p>Here is ad_nfs_btf_01</p>
+        <div className="slotWrapper">
+          <div id="ad_nfs_btf_01"></div>
+        </div>
+        <p>Here is ad_ns_btf_01</p>
+        <div className="slotWrapper">
+          <div id="ad_ns_btf_01"></div>
+        </div>
+        <p>Here is ad_ns_btf_02</p>
+        <div className="slotWrapper">
+          <div id="ad_ns_btf_02"></div>
+        </div>
+        <p>Here is ad_ns_btf_03</p>
+        <div className="slotWrapper">
+          <div id="ad_ns_btf_03"></div>
+        </div>
     
-        <p>This page using PROD Ad Fuel and QA AIS: </p>
-        <p><a href="//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js" target="_blank">//i.cdn.turner.com/ads/adfuel/adfuel-2.0.js</a> </p>
-        <p><a href="//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js" target="_blank">//i.cdn.turner.com/ads/qa/adfuel/ais/2.0/nba2-ais.js</a> </p>
+        <p>This page using PROD Ad Fuel and AIS with HomePage Registry: </p>
+        <p><a href="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js" target="_blank">//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.min.js</a> </p>
+        <p><a href="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.js" target="_blank">//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.js</a> </p>
+        <p><a href="https://i.cdn.turner.com/ads/nba3/index.txt?cacheBuster=00158e" target="_blank">NBA Registry Index</a> </p>
       </main>
 
       <footer>
