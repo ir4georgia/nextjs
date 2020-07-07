@@ -11,6 +11,20 @@ export default function Home() {
 
   useEffect(() => {
     if (window.AdFuel) {
+      console.log('ADSTATS: Adding Listener for AdFuelRequestComplete at ' + Date.now() / 1000);
+      AdFuel.addEvent(document, 'AdFuelRequestComplete', function (event) {
+          console.log('ADSTATS: AdFuelRequestComplete fired at ' + Date.now() / 1000 + ' for ' + event.detail.slots.length + ' slots');
+          var requestedSlots = event.detail.slots;
+          var dispatchOptions = event.detail.options;
+      });
+      console.log('ADSTATS: Adding Listener for GPTRenderComplete at ' + Date.now() / 1000);
+      AdFuel.addEvent(document, 'GPTRenderComplete', function (event) {
+          console.log('ADSTATS: GPTRenderComplete for ' + event.detail.divId + ' fired at ' + Date.now() / 1000);
+          var gptSlot = event.detail.asset;
+          var renderedSlotId = 'ad_' + event.detail.pos;
+          var isEmpty = event.detail.empty;
+          var adSize = event.detail.renderedSize;
+      });
       if (window.WM.UserConsent && window.WM.UserConsent.isReady()) {
         console.log('ADSTATS: UseEffect: AdFuel and UserConsent ready->Queuing the Registry at ' + Date.now() / 1000);
         AdFuel.addPageLevelTarget('status','nba_endeavor')
@@ -28,11 +42,11 @@ export default function Home() {
       <Head>
         <title>MP and Next.js</title>
         <link rel="icon" href="/favicon.ico" />
-        <script type="text/javascript" async src="userconsentConfig2.js"></script>
-        <script type="text/javascript" async src="user-consent.js"></script>
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.min.js"></script>
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js"></script>
-        <script type="text/javascript" async src="addListeners2.js"></script>
+        <script type="text/javascript" async src="userconsentConfig2.js" key="ucconfig"></script>
+        <script type="text/javascript" async src="user-consent.js" key="uc"></script>
+        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.min.js" key="ais"></script>
+        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js" key="adfuel"></script>
+        <script type="text/javascript" async src="addListeners3.js" key="listeners"></script>
       </Head>
 
       <main>
