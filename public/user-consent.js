@@ -120,7 +120,7 @@ window.WM = window.WM || {};
  * @namespace
  * @memberOf WM
  */
-window.WM.UserConsent = (function UserConsent(win, doc) {
+window.WM.UserConsent = window.WM.UserConsent || (function UserConsent(win, doc) {
     'use strict';
 
     var categories,
@@ -870,7 +870,7 @@ window.WM.UserConsent = (function UserConsent(win, doc) {
  * @namespace
  * @memberof WM
  */
-window.WM.ConsentSiteConfig = {
+window.WM.UserConsentConfig = {
     cookieDomain: ".nba.com",
     domId: "d0494fd0-8921-497a-8323-e3d29775ce1b",
     src: "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js",

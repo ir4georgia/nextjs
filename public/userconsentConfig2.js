@@ -1,4 +1,4 @@
-console.log('ADSTATS: adding User Consent Config at ' + Date.now() / 1000);
+console.log('ADSTATS: Adding User Consent Config at ' + Date.now() / 1000);
 window.WM = window.WM || {};
 window.WM.UserConsentConfig = {
     cookieDomain: '.nba.com',

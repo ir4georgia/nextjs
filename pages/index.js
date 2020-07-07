@@ -4,37 +4,19 @@ import Head from 'next/head'
 
 export default function Home() {
 
-  // This gets called on every request
+  // This gets called on every request - one day I'll learn about it
   async function getServerSideProps() {
     return { props: { "org": "TechPubOps" } }
   }
-
+  // Use a hook to initialize Ad Fuel, add Page Level Targeting and queue the registry
   useEffect(() => {
-    if (window.AdFuel) {
-      console.log('ADSTATS: Adding Listener for AdFuelRequestComplete at ' + Date.now() / 1000);
-      AdFuel.addEvent(document, 'AdFuelRequestComplete', function (event) {
-          console.log('ADSTATS: AdFuelRequestComplete fired at ' + Date.now() / 1000 + ' for ' + event.detail.slots.length + ' slots');
-          var requestedSlots = event.detail.slots;
-          var dispatchOptions = event.detail.options;
-      });
-      console.log('ADSTATS: Adding Listener for GPTRenderComplete at ' + Date.now() / 1000);
-      AdFuel.addEvent(document, 'GPTRenderComplete', function (event) {
-          console.log('ADSTATS: GPTRenderComplete for ' + event.detail.divId + ' fired at ' + Date.now() / 1000);
-          var gptSlot = event.detail.asset;
-          var renderedSlotId = 'ad_' + event.detail.pos;
-          var isEmpty = event.detail.empty;
-          var adSize = event.detail.renderedSize;
-      });
-      if (window.WM.UserConsent && window.WM.UserConsent.isReady()) {
-        console.log('ADSTATS: UseEffect: AdFuel and UserConsent ready->Queuing the Registry at ' + Date.now() / 1000);
-        AdFuel.addPageLevelTarget('status','nba_endeavor')
-        AdFuel.queueRegistry("https://i.cdn.turner.com/ads/nba3/nba_homepage.min.js")
-      } else {
-        console.log('ADSTATS: useEffect: User Consent is not ready at ' + Date.now() / 1000);
-      }
-    } else {
-      console.log('ADSTATS: useEffect: No Window.AdFuel at ' + Date.now() / 1000);
+    if (window.AdFuelOptions){
+      console.log('ADSTATS: UseEffect: Manually initializing AdFuel at ' + Date.now() / 1000);
+      window.AdFuel.init(window.AdFuelOptions)
     }
+    console.log('ADSTATS: UseEffect: Adding Page Level Targeting and Queuing the Registry at ' + Date.now() / 1000);
+    window.AdFuel.addPageLevelTarget('status','nba_endeavor')
+    window.AdFuel.queueRegistry("https://i.cdn.turner.com/ads/nba3/nba_homepage.min.js")
   }, [])
 
   return (
@@ -42,20 +24,20 @@ export default function Home() {
       <Head>
         <title>MP and Next.js</title>
         <link rel="icon" href="/favicon.ico" />
-        <script type="text/javascript" async src="userconsentConfig2.js" key="ucconfig"></script>
-        <script type="text/javascript" async src="user-consent.js" key="uc"></script>
+        <script type="text/javascript" async src="userconsentConfig2.js" key="userConsentConfig"></script>
+        <script type="text/javascript" async src="user-consent.js" key="userConsent"></script>
         <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.min.js" key="ais"></script>
-        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js" key="adfuel"></script>
-        <script type="text/javascript" async src="addListeners3.js" key="listeners"></script>
+        <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js" key="adFuel"></script>
+        <script type="text/javascript" async src="addListeners2.js" key="addListeners"></script>
       </Head>
 
       <main>
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">MP on Next.js 9.4.4</a>
         </h1>
-        <li>Let's use Next.js HEAD function to load "user-consent.js" file</li>
         <li>Let's use Next.js HEAD function to load "userconsentConfig.js" file</li>
-        <li>Let's use Next.js HEAD function to load "addListeners.js" file</li>
+        <li>Let's use Next.js HEAD function to load "user-consent.js" file</li>
+        <li>Let's use Next.js HEAD function to load "addListeners2.js" file</li>
         <li>Let's use Next.js HEAD function to load "nba3-ais.min.js" and "adfuel-2.1.39.js" files</li>
         <li>Finally, queue the registry via useEffect (when component mounts)</li>
         <p>Here is ad_bnr_atf_01</p>
