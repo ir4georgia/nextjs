@@ -11,9 +11,13 @@ export default function Home() {
 
   useEffect(() => {
     if (window.AdFuel) {
-      console.log('ADSTATS: UseEffect: Queuing the Registry at ' + Date.now() / 1000);
-      AdFuel.addPageLevelTarget('status','nba_endeavor')
-      AdFuel.queueRegistry("https://i.cdn.turner.com/ads/nba3/nba_homepage.min.js")
+      if (window.WM.UserConsent && window.WM.UserConsent.isReady()) {
+        console.log('ADSTATS: UseEffect: AdFuel and UserConsent ready->Queuing the Registry at ' + Date.now() / 1000);
+        AdFuel.addPageLevelTarget('status','nba_endeavor')
+        AdFuel.queueRegistry("https://i.cdn.turner.com/ads/nba3/nba_homepage.min.js")
+      } else {
+        console.log('ADSTATS: useEffect: User Consent is not ready at ' + Date.now() / 1000);
+      }
     } else {
       console.log('ADSTATS: useEffect: No Window.AdFuel at ' + Date.now() / 1000);
     }
@@ -26,9 +30,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <script type="text/javascript" async src="userconsentConfig2.js"></script>
         <script type="text/javascript" async src="user-consent.js"></script>
-        <script type="text/javascript" async src="addListeners2.js"></script>
         <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.min.js"></script>
         <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js"></script>
+        <script type="text/javascript" async src="addListeners2.js"></script>
       </Head>
 
       <main>

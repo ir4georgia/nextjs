@@ -26,5 +26,5 @@ if (window.AdFuel) {
         var adSize = event.detail.renderedSize;
     });
 } else {
-    console.log('ADSTATS: No Window.AdFuel ' + Date.now() / 1000);
+    console.log('ADSTATS: No Window.AdFuel-Listeners not added ' + Date.now() / 1000);
 }
