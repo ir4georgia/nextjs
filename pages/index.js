@@ -35,11 +35,12 @@ export default function Home() {
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">MP on Next.js 9.4.4</a>
         </h1>
+        <h4>NBA Home Page</h4>
         <li>Let's use Next.js HEAD function to load "userconsentConfig.js" file</li>
         <li>Let's use Next.js HEAD function to load "user-consent.js" file</li>
         <li>Let's use Next.js HEAD function to load "addListeners2.js" file</li>
         <li>Let's use Next.js HEAD function to load "nba3-ais.min.js" and "adfuel-2.1.39.js" files</li>
-        <li>Finally, queue the registry via useEffect (when component mounts)</li>
+        <li>Finally, add page-level targeting and queue the registry via useEffect hook</li>
         <p>Here is ad_bnr_atf_01</p>
         <div className="slotWrapper">
           <div id="ad_bnr_atf_01"></div>
@@ -76,7 +77,7 @@ export default function Home() {
       </main>
 
       <footer>
-        <p>Michael J. Pierce - Tech Pub Ops</p>
+        <p>Michael J. Pierce - Tech Pub Ops - WarnerMedia</p>
       </footer>
 
       <style jsx>{`
@@ -90,9 +91,12 @@ export default function Home() {
         }
 
         .slotWrapper {
-          width: 728px;
-          height: 90px;
+          max-width: 970px;
+          max-height: 250px;
+          min-width: 88px;
+          min-height: 31px;
           border: thin solid red;
+          text-align: center;
         }
 
         main {
