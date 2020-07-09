@@ -8,15 +8,31 @@ export default function Home() {
   async function getServerSideProps() {
     return { props: { "org": "TechPubOps" } }
   }
+
+  function refreshMe() {
+    console.log('ADSTATS: Refresh button clicked at ' + Date.now() / 1000);
+    window.AdFuel.refresh();
+  }
+
   // Use a hook to initialize Ad Fuel, add Page Level Targeting and queue the registry
   useEffect(() => {
+
     if (window.AdFuelOptions){
       console.log('ADSTATS: UseEffect: Manually initializing AdFuel at ' + Date.now() / 1000);
       window.AdFuel.init(window.AdFuelOptions)
     }
-    console.log('ADSTATS: UseEffect: Adding Page Level Targeting and Queuing the Registry at ' + Date.now() / 1000);
+
+    console.log('ADSTATS: UseEffect: Adding Page Level Targeting and Queuing the HP Registry at ' + Date.now() / 1000);
     window.AdFuel.addPageLevelTarget('status','nba_endeavor')
-    window.AdFuel.queueRegistry("https://i.cdn.turner.com/ads/nba3/nba_homepage.min.js")
+    window.AdFuel.queueRegistry("https://i.cdn.turner.com/ads/nba3/nba_homepage.min.js"), {
+      //adUnitMap: "NBA/schedule",  //for a future demo of ad unit mapping at future time,
+      dispatch: true,
+      maintainCorrelator: false,
+      sync: false,
+      syncSlots: [],
+      exclude: [],
+      slotMap: {}
+    }
   }, [])
 
   return (
@@ -24,11 +40,12 @@ export default function Home() {
       <Head>
         <title>MP and Next.js</title>
         <link rel="icon" href="/favicon.ico" />
+        <script type="text/javascript" async src="addListeners2.js" key="addListeners"></script>
         <script type="text/javascript" async src="userconsentConfig2.js" key="userConsentConfig"></script>
         <script type="text/javascript" async src="user-consent.js" key="userConsent"></script>
         <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.min.js" key="ais"></script>
         <script type="text/javascript" async src="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js" key="adFuel"></script>
-        <script type="text/javascript" async src="addListeners2.js" key="addListeners"></script>
+        {/* <script type="text/javascript" async src="adfuel-2.1.39.js" key="adFuel"></script> */}
       </Head>
 
       <main>
@@ -36,9 +53,9 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">MP on Next.js 9.4.4</a>
         </h1>
         <h4>NBA Home Page</h4>
+        <li>Let's use Next.js HEAD function to load "addListeners2.js" file</li>
         <li>Let's use Next.js HEAD function to load "userconsentConfig.js" file</li>
         <li>Let's use Next.js HEAD function to load "user-consent.js" file</li>
-        <li>Let's use Next.js HEAD function to load "addListeners2.js" file</li>
         <li>Let's use Next.js HEAD function to load "nba3-ais.min.js" and "adfuel-2.1.39.js" files</li>
         <li>Finally, add page-level targeting and queue the registry via useEffect hook</li>
         <p>Here is ad_bnr_atf_01</p>
@@ -69,7 +86,11 @@ export default function Home() {
         <div className="slotWrapper">
           <div id="ad_ns_btf_03"></div>
         </div>
-    
+
+        <div>
+          <button className="refreshButton" onClick={refreshMe}>Refresh Ads</button>
+        </div>
+
         <p>This page using PROD Ad Fuel and AIS with HomePage Registry: </p>
         <p><a href="//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.js" target="_blank">//i.cdn.turner.com/ads/adfuel/adfuel-2.1.39.min.js</a> </p>
         <p><a href="//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.js" target="_blank">//i.cdn.turner.com/ads/adfuel/ais/2.0/nba3-ais.js</a> </p>
@@ -97,6 +118,10 @@ export default function Home() {
           min-height: 31px;
           border: thin solid red;
           text-align: center;
+        }
+
+        .refreshButton {
+          margin-top: 20px;
         }
 
         main {
